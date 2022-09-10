@@ -15,7 +15,7 @@ function ProductCard({ product }) {
       {" "}
       <Card style={{ width: "18rem" }}>
         <Card.Img
-          classname="momoImg"
+          className="momoImg"
           variant="top"
           src={itemImg}
           height={80}

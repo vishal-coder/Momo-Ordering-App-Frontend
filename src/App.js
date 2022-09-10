@@ -13,6 +13,7 @@ import VerifyToken from "./components/VerifyToken";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./components/Dashboard";
 import CustomerProductList from "./components/CustomerProductList";
+import Cart from "./components/Cart";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
             path="/customerProductList"
             element={<CustomerProductList />}
           />
+
+          <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
     </div>

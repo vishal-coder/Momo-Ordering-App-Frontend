@@ -1,0 +1,24 @@
+.cartWrapper {
+  margin-top: 5rem;
+  margin-left: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.orderlist {
+  /* flex: 3 3 3; */
+
+  width: 60%;
+}
+
+.cartoverview {
+  background-color: rgb(48, 48, 48);
+  color: whitesmoke;
+  width: 30vw;
+  height: 30vh;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  border-radius: 10px;
+  padding-top: 2rem;
+}

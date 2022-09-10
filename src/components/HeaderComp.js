@@ -44,7 +44,9 @@ function HeaderComp() {
       <Container>
         <Navbar.Brand>Momo King</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link>Home</Nav.Link>
+          <Nav.Link onClick={() => navigate("customerProductList")}>
+            Home
+          </Nav.Link>
           <Nav.Link>Features</Nav.Link>
           <Nav.Link>Pricing</Nav.Link>
         </Nav>
@@ -65,7 +67,11 @@ function HeaderComp() {
             )}
           </Nav>
           {user ? (
-            <Button variant="success" onClick={() => navigate("/cart")}>
+            <Button
+              variant="success"
+              onClick={() => navigate("/cart")}
+              disabled={cart.length < 1}
+            >
               <Cart4 className="cartIcon" color="white" size={24} />{" "}
               <Badge bg="danger">{getTotalQuantity() || 0}</Badge>
             </Button>

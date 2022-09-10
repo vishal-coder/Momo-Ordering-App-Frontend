@@ -10,12 +10,9 @@ function CustomerProductList() {
     async function fetchData() {
       const response = await getAllProducts();
       setProductList(response.productlist);
-      // dispatch(setProductList(response.productlist));
     }
     fetchData();
   }, []);
-
-  console.log("productList", productList);
 
   return (
     <div className="productlistwrapper">
@@ -25,7 +22,7 @@ function CustomerProductList() {
         <>
           {/* <h3>Select any delicious product</h3> */}
           {productList.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </>
       )}
