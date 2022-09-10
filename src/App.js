@@ -33,10 +33,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/" element={<MainBody />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route
-            path="/customerProductList"
-            element={<CustomerProductList />}
-          />
+          <Route path="/productList" element={<CustomerProductList />} />
 
           <Route path="cart" element={<Cart />} />
         </Route>

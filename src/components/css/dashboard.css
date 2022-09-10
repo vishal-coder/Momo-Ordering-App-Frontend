@@ -23,3 +23,7 @@
   padding: 1rem;
   margin-bottom: 3rem;
 }
+
+.warningText {
+  color: red !important;
+}

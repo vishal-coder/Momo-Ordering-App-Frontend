@@ -22,7 +22,7 @@ function Login() {
     } else {
       dispatch(setUser(response));
       if (response.user.userType != "admin") {
-        navigate("/customerProductList");
+        navigate("/productList");
       } else {
         navigate("/dashboard");
       }

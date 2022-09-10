@@ -84,7 +84,7 @@ function Cart() {
           </div>
         </>
       ) : (
-        (navigate("/customerProductList"),
+        (navigate("/productList"),
         toast.error("Cart is empty..Please select product"))
       )}
     </div>

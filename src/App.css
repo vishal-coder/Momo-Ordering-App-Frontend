@@ -69,3 +69,6 @@
 .card {
   border-radius: 5%;
 }
+.hideEle {
+  display: none;
+}

@@ -17,7 +17,7 @@ function HeaderComp() {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart) || [];
   const { user } = useSelector((state) => state.auth);
-  // console.log("user in header", user);
+  console.log("user in header", user);
   const getTotalQuantity = () => {
     let total = 0;
     if (cart) {
@@ -44,9 +44,7 @@ function HeaderComp() {
       <Container>
         <Navbar.Brand>Momo King</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link onClick={() => navigate("customerProductList")}>
-            Home
-          </Nav.Link>
+          <Nav.Link onClick={() => navigate("productList")}>Home</Nav.Link>
           <Nav.Link>Features</Nav.Link>
           <Nav.Link>Pricing</Nav.Link>
         </Nav>
@@ -66,7 +64,7 @@ function HeaderComp() {
               </>
             )}
           </Nav>
-          {user ? (
+          {user && user.user.userType != "admin" ? (
             <Button
               variant="success"
               onClick={() => navigate("/cart")}
