@@ -17,7 +17,7 @@ function HeaderComp() {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart) || [];
   const { user } = useSelector((state) => state.auth);
-  console.log("user in header", user);
+  // console.log("user in header", user);
   const getTotalQuantity = () => {
     let total = 0;
     if (cart) {
