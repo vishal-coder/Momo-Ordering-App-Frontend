@@ -6,10 +6,28 @@ import * as yup from "yup";
 import "./css/login.css";
 import { requestLogin } from "../services/authService.js";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { setUser } from "../features/auth/authSlice.js";
 
 function Login() {
   const navigate = useNavigate();
-  const handleLogin = () => {};
+  const dispatch = useDispatch();
+
+  const handleLogin = async (values) => {
+    const response = await requestLogin(values);
+    console.log(response);
+    if (!response.success) {
+      setFieldError("username", response.message);
+    } else {
+      dispatch(setUser(response));
+      if (response.user.userType != "admin") {
+        navigate("/listingPage");
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  };
   const loginvalidationschema = yup.object({
     username: yup.string().email().required("Please enter valid email address"),
     password: yup.string().required("please enter your password"),
@@ -27,13 +45,8 @@ function Login() {
   } = useFormik({
     initialValues: { username: "", password: "" },
     validationSchema: loginvalidationschema,
-    onSubmit: async (values) => {
-      const response = await requestLogin(values);
-      if (!response.success) {
-        setFieldError("username", response.message);
-      } else {
-        navigate("/dashboard");
-      }
+    onSubmit: (values) => {
+      handleLogin(values);
     },
   });
 

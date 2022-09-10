@@ -37,3 +37,9 @@
   line-height: 1.5;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.modal-50w {
+  width: 50%;
+  height: 80%;
+  max-width: none !important;
+}

@@ -10,10 +10,15 @@ import RegistrationSuccess from "./components/RegistrationSuccess";
 import ResetPassword from "./components/ResetPassword";
 import VerifyEmail from "./components/VerifyEmail";
 import VerifyToken from "./components/VerifyToken";
+import { ToastContainer } from "react-toastify";
+import ListingPage from "./components/ListingPage";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer theme="colored" />
+
       <HeaderComp />
       <MainBody />
       <Footer />
@@ -27,7 +32,8 @@ function App() {
         <Route path="/verifyToken" element={<VerifyToken />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/" element={<MainBody />}>
-          <Route path="dashboard" element={<Register />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/listingpage" element={<ListingPage />} />
         </Route>
       </Routes>
     </div>

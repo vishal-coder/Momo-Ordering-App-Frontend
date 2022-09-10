@@ -1,27 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const authSlice = createSlice({
-  name: "auth",
+export const authSlice = createSlice({
+  name: "user",
   initialState: {
-    user: null,
-    token: null,
+    user: null, // for user object
+    userToken: localStorage.getItem("token") || null, // for storing the JWT
+    isLoggedIn: false,
+    error: null,
+    success: false, // for monitoring the registration process.
   },
-  reducer: {
-    setCredentials: (state, action) => {
-      const { user, accessToken } = action.payload;
-      state.user = user;
-      state.token = accessToken;
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
 
-    logout: (state, action) => {
-      state.user = null;
-      state.token = null;
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
+
+    setUserToken: (state, action) => {
+      state.userToken = action.payload;
+    },
+
+    LOG_OUT: (state) => {
+      console.log("called set LOG_OUT", state);
+      state.user = undefined;
+
+      console.log("called set LOG_OUT", state);
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
-export default authSlice.reducer;
+export const { setUser, setIsLoggedIn, setUserToken, LOG_OUT } =
+  authSlice.actions;
 
-export const selectCurrentUser = (state) => state.auth.user;
-export const selectCurrentToken = (state) => state.auth.token;
+export default authSlice.reducer;

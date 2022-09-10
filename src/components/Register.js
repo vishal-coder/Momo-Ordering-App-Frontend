@@ -38,7 +38,6 @@ function Register() {
     },
     validationSchema: formvalidation,
     onSubmit: async (values) => {
-      console.log("register values", values);
       const response = await submitRegistration(values);
       if (!response.success) {
         setFieldError("firstname", response.message);
