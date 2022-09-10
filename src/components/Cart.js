@@ -8,6 +8,7 @@ import { TrashFill } from "react-bootstrap-icons";
 import { removeItem } from "../features/cartSlice";
 import { toast } from "react-toastify";
 import { saveOrder } from "../services/orderService";
+import { createPaymentOrder } from "../services/paymentService";
 
 function Cart() {
   const navigate = useNavigate();
@@ -15,9 +16,68 @@ function Cart() {
   const { cart } = useSelector((state) => state.cart) || [];
   const { total } = useSelector((state) => state.cart) || [];
   const { user } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
+  const [orderAmount, setOrderAmount] = useState(0);
+  const [ordres, setOrders] = useState([]); //to set orders
 
-  const handleCheckout = () => {
-    console.log();
+  const initializeRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      document.body.appendChild(script);
+    });
+  };
+  const handleCheckout = async () => {
+    const res = await initializeRazorpay();
+
+    if (!res) {
+      alert("Razorpay SDK Failed to load");
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await createPaymentOrder({ amount: total });
+      console.log("createPaymentOrder-response", response.orderDate);
+      const { amount, id: order_id, currency } = response.orderDate;
+      console.log(process.env.REACT_APP_RZ_KEY);
+      var options = {
+        key: `${process.env.REACT_APP_RZ_KEY}`, // Enter the Key ID generated from the Dashboard
+        amount: "100",
+        currency: "INR",
+        name: "MomoKing",
+        description: "Test Transaction",
+        order_id: order_id,
+        handler: function (response) {
+          toast.success("Payment successful");
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature);
+        },
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+      };
+      var rzp1 = new window.Razorpay(options);
+      rzp1.open();
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+
+    //TODO: after successful payment saveorder
     saveOrder({ cart: cart, total: total, user: user.user.email });
   };
 
@@ -77,9 +137,11 @@ function Cart() {
                 onClick={() => {
                   handleCheckout();
                 }}
+                disabled={loading}
               >
                 Checkout
               </Button>
+              {loading && <div>Loading...</div>}
             </div>
           </div>
         </>
