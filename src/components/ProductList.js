@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { TrashFill, PencilFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { deleteProduct, getProducts } from "../services/productservice";
+import { deleteProduct, getAllProducts } from "../services/productservice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,15 +19,10 @@ function ProductList() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  //   const getProductList = async () => {
-  //     const response = await getProducts();
-  //     setProductList(response.productlist);
-  //     console.log(productList);
-  //   };
+
   useEffect(() => {
     async function fetchData() {
-      //   getProductList();
-      const response = await getProducts();
+      const response = await getAllProducts();
       dispatch(setProductList(response.productlist));
     }
     fetchData();

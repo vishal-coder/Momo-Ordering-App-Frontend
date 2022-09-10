@@ -11,8 +11,8 @@ import ResetPassword from "./components/ResetPassword";
 import VerifyEmail from "./components/VerifyEmail";
 import VerifyToken from "./components/VerifyToken";
 import { ToastContainer } from "react-toastify";
-import ListingPage from "./components/ListingPage";
 import Dashboard from "./components/Dashboard";
+import CustomerProductList from "./components/CustomerProductList";
 
 function App() {
   return (
@@ -21,7 +21,6 @@ function App() {
 
       <HeaderComp />
       <MainBody />
-      <Footer />
 
       <Routes>
         <Route path="/verifyEmail/:token" element={<VerifyEmail />} />
@@ -33,7 +32,10 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/" element={<MainBody />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="/listingpage" element={<ListingPage />} />
+          <Route
+            path="/customerProductList"
+            element={<CustomerProductList />}
+          />
         </Route>
       </Routes>
     </div>

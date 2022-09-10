@@ -24,11 +24,17 @@ export async function editOneProduct(values) {
   const data = await response.json();
   return data;
 }
-export async function getProducts() {
-  const response = await fetch(`${process.env.REACT_APP_API}/product/getAll`, {
-    methos: "GET",
-    headers: { "Content-Type": "application/json", Accept: "Application/json" },
-  });
+export async function getAllProducts() {
+  const response = await fetch(
+    `${process.env.REACT_APP_API}/product/getAllProducts`,
+    {
+      methos: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "Application/json",
+      },
+    }
+  );
   const data = await response.json();
   return data;
 }

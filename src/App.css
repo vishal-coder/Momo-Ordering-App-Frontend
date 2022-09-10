@@ -43,3 +43,28 @@
   height: 80%;
   max-width: none !important;
 }
+
+.momoImg {
+  position: relative;
+  padding: 5px;
+  display: inline-block;
+  width: 100% !important;
+  height: 10px;
+  width: 200px;
+  object-fit: cover;
+  border: 1px;
+  border-radius: 50%;
+  object-fit: none;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+  border-radius: 50%;
+  border-radius: 5%;
+}
+
+.card {
+  border-radius: 5%;
+}
