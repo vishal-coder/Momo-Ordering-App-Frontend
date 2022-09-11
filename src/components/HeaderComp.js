@@ -12,6 +12,7 @@ import { logoutUser } from "../services/authService";
 import { LOG_OUT } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { resetCart } from "../features/cartSlice";
 function HeaderComp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function HeaderComp() {
     } else {
       toast.success("User Logged out successfully");
       dispatch(LOG_OUT());
+      dispatch(resetCart());
       navigate("/");
     }
   };
@@ -46,7 +48,11 @@ function HeaderComp() {
         <Nav className="me-auto">
           <Nav.Link onClick={() => navigate("productList")}>Home</Nav.Link>
           <Nav.Link>Features</Nav.Link>
-          <Nav.Link>Pricing</Nav.Link>
+          {user && user.user.userType != "admin" ? (
+            <Nav.Link onClick={() => navigate("customerOrderView")}>
+              Open Orders
+            </Nav.Link>
+          ) : null}
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           <Nav>

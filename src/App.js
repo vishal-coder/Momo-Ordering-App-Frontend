@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import Dashboard from "./components/Dashboard";
 import CustomerProductList from "./components/CustomerProductList";
 import Cart from "./components/Cart";
+import CustomerOrderView from "./components/CustomerOrderView";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
         <Route path="/" element={<MainBody />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="/productList" element={<CustomerProductList />} />
-
+          <Route path="/customerOrderView" element={<CustomerOrderView />} />
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>

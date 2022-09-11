@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { TrashFill } from "react-bootstrap-icons";
-import { removeItem } from "../features/cartSlice";
+import { removeItem, resetCart } from "../features/cartSlice";
 import { toast } from "react-toastify";
 import { saveOrder } from "../services/orderService";
-import { createPaymentOrder } from "../services/paymentService";
+import {
+  createPaymentOrder,
+  savePaymentInfo,
+} from "../services/paymentService";
 
 function Cart() {
   const navigate = useNavigate();
@@ -45,21 +48,40 @@ function Cart() {
     try {
       setLoading(true);
       const response = await createPaymentOrder({ amount: total });
-      console.log("createPaymentOrder-response", response.orderDate);
-      const { amount, id: order_id, currency } = response.orderDate;
+      console.log("createPaymentOrder-response", response.orderData);
+      const { amount, id: order_id, currency } = response.orderData;
       console.log(process.env.REACT_APP_RZ_KEY);
       var options = {
         key: `${process.env.REACT_APP_RZ_KEY}`, // Enter the Key ID generated from the Dashboard
-        amount: "100",
-        currency: "INR",
+        amount: amount,
+        currency: currency,
         name: "MomoKing",
         description: "Test Transaction",
         order_id: order_id,
         handler: function (response) {
-          toast.success("Payment successful");
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature);
+          const data = {
+            amount: Number(amount) / 100,
+            orderCreationId: order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpaySignature: response.razorpay_signature,
+            user: user.user.email,
+          };
+          toast.success("Amount paid successfully");
+
+          const paymentResult = savePaymentInfo(data);
+          const orderSaved = saveOrder({
+            cart: cart,
+            total: total,
+            user: user.user.email,
+            payemntId: data.razorpayPaymentId,
+          });
+          if (!orderSaved) {
+            toast.warning("error in executing order");
+          } else {
+            navigate("/customerOrderView");
+            toast.success("Product ordered successfully");
+          }
         },
         prefill: {
           name: "Gaurav Kumar",
@@ -67,18 +89,16 @@ function Cart() {
           contact: "9999999999",
         },
         notes: {
-          address: "Razorpay Corporate Office",
+          address: "MomoKing Corporate Office",
         },
       };
-      var rzp1 = new window.Razorpay(options);
-      rzp1.open();
+      var rzPay = new window.Razorpay(options);
+
+      rzPay.open();
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
-
-    //TODO: after successful payment saveorder
-    saveOrder({ cart: cart, total: total, user: user.user.email });
   };
 
   return (
