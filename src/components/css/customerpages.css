@@ -21,4 +21,6 @@
   margin-top: 2rem;
   width: 50vw;
   text-align: center;
+  overflow-x: auto;
+  height: 77vh;
 }

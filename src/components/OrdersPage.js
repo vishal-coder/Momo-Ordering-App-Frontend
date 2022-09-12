@@ -1,31 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { getAllOrders, updateOrderStatus } from "../services/orderService";
 import { toast } from "react-toastify";
+import io from "socket.io-client";
+import { SocketContext } from "../context/socket.js";
 
 function OrdersPage() {
   const status = ["yet to start", "preparing", "on the way", "delivered"];
-  const [orders, setOrders] = useState();
+  const [orderList, setOrderList] = useState();
+  const socket = useContext(SocketContext);
+
   useEffect(() => {
     async function fetchData() {
       const response = await getAllOrders();
-      setOrders(response.orderlist);
+      setOrderList(response.orderlist);
     }
     fetchData();
   }, []);
+  // socket.off('MY_EVENT').on('MY_EVENT', () => doThisOnlyOnce());
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("I'm connected with the back-end", socket.id);
+    });
+
+    socket.off("order created").on("order created", function (newOrder) {
+      alert("new order created");
+      console.log("socket order is", newOrder.fullDocument);
+      setOrderList((prev) => [...prev, newOrder.fullDocument]);
+      toast.success("New Order added");
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("order created");
+    };
+  }, [socket]);
+
   const handleupdateOrderStatus = (order) => {
     updateOrderStatus({ id: order._id, status: order.status + 1 });
     order.status = order.status + 1;
     toast.success("status updated successfully");
-    const updatedList = orders.map((item) => {
+    const updatedList = orderList.map((item) => {
       return item._id == order._id ? order : item;
     });
-    setOrders(updatedList);
+    setOrderList(updatedList);
   };
   return (
     <div className="Productlistwrapper">
-      {!orders ? (
+      {!orderList ? (
         <>
           {" "}
           <p>No pending orders </p>{" "}
@@ -47,11 +70,11 @@ function OrdersPage() {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order, index) => (
+              {orderList.map((order, index) => (
                 // {order.status != 3 ?() : null}
                 <tr
                   key={order._id + index}
-                  className={order.status == 3 ? "hideEle" : null}
+                  // className={order.status == 3 ? "hideEle" : null}
                 >
                   <td>{index + 1}</td>
                   <td>{order._id.slice(15)}</td>

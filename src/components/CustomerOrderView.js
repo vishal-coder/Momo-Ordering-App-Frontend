@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCart } from "../features/cartSlice";
 import Table from "react-bootstrap/Table";
 import { getCustomerOrders } from "../services/orderService";
 
+import { toast } from "react-toastify";
+import { SocketContext } from "../context/socket";
+
 function CustomerOrderView() {
   const dispatch = useDispatch();
   const status = ["yet to start", "preparing", "on the way", "delivered"];
   const [orders, setOrders] = useState();
-  const { cart } = useSelector((state) => state.cart) || [];
   const { user } = useSelector((state) => state.auth);
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     dispatch(resetCart());
@@ -18,7 +21,31 @@ function CustomerOrderView() {
       setOrders(response.customerOrders);
     }
     fetchData();
+    socket.on("connect", () => {
+      console.log("I'm connected with the back-end", socket.id);
+    });
   }, []);
+
+  useEffect(() => {
+    socket.on("order updated", function (updatedOrder) {
+      updateOrderList(updatedOrder);
+    });
+  }, [socket]);
+  const updateOrderList = (updatedOrder) => {
+    const id = updatedOrder.documentKey;
+    const newStatus = updatedOrder.updateDescription.updatedFields.status;
+
+    setOrders((prev) => {
+      const orderUpdated = prev.find((item) => {
+        return item._id == id._id;
+      });
+      orderUpdated.status = newStatus;
+      const editedList = prev.map(function (order) {
+        return order._id == id._id ? orderUpdated : order;
+      });
+      return editedList;
+    });
+  };
 
   function formatDate1(d) {
     const date = new Date(d);
