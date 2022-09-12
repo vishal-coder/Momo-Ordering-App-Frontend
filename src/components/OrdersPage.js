@@ -25,7 +25,6 @@ function OrdersPage() {
     });
 
     socket.off("order created").on("order created", function (newOrder) {
-      alert("new order created");
       console.log("socket order is", newOrder.fullDocument);
       setOrderList((prev) => [...prev, newOrder.fullDocument]);
       toast.success("New Order added");

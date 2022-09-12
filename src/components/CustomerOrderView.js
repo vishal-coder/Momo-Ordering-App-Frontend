@@ -24,6 +24,7 @@ function CustomerOrderView() {
     socket.on("connect", () => {
       console.log("I'm connected with the back-end", socket.id);
     });
+    socket.emit("new user", user.user.email);
   }, []);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function CustomerOrderView() {
   const updateOrderList = (updatedOrder) => {
     const id = updatedOrder.documentKey;
     const newStatus = updatedOrder.updateDescription.updatedFields.status;
-
+    toast.success("Order status updated");
     setOrders((prev) => {
       const orderUpdated = prev.find((item) => {
         return item._id == id._id;
