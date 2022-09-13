@@ -20,20 +20,18 @@ function OrdersPage() {
     }
     fetchData();
   }, []);
-  // socket.off('MY_EVENT').on('MY_EVENT', () => doThisOnlyOnce());
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("I'm connected with the back-end", socket.id);
+      // console.log("I'm connected with the back-end", socket.id);
     });
 
     socket.off("order created").on("order created", function (newOrder) {
-      console.log("socket order is", newOrder.fullDocument);
       setOrderList((prev) => [...prev, newOrder.fullDocument]);
       toast.success("New Order added");
     });
 
     return () => {
-      socket.off("connect");
+      // socket.off("connect");
       socket.off("order created");
     };
   }, [socket]);

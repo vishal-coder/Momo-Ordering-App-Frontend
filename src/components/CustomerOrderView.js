@@ -34,6 +34,10 @@ function CustomerOrderView() {
     socket.on("order updated", function (updatedOrder) {
       updateOrderList(updatedOrder);
     });
+    return () => {
+      // socket.off("connect");
+      socket.off("order updated");
+    };
   }, [socket]);
   const updateOrderList = (updatedOrder) => {
     const id = updatedOrder.documentKey;

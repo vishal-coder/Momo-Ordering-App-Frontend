@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -18,7 +18,8 @@ function HeaderComp() {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart) || [];
   const { user } = useSelector((state) => state.auth);
-  console.log("user in header", user);
+  const [isLoading, setIsLoading] = useState(false);
+
   const getTotalQuantity = () => {
     let total = 0;
     if (cart) {
@@ -30,11 +31,12 @@ function HeaderComp() {
   };
 
   const handleLogout = async () => {
+    setIsLoading(true);
     const response = await logoutUser(user.token);
-    console.log("logout res", response);
     if (!response.success) {
       toast.error("Error while logging out");
     } else {
+      setIsLoading(false);
       toast.success("User Logged out successfully");
       dispatch(LOG_OUT());
       dispatch(resetCart());
@@ -78,7 +80,9 @@ function HeaderComp() {
             ) : (
               <>
                 <Navbar.Text>Welcome, {user.user.name}</Navbar.Text>
-                <Nav.Link onClick={() => handleLogout()}>Logout</Nav.Link>
+                <Nav.Link onClick={() => handleLogout()} disabled={isLoading}>
+                  Logout
+                </Nav.Link>
               </>
             )}
           </Nav>

@@ -80,3 +80,8 @@
   margin-top: 3rem;
   padding-top: 1rem;
 }
+
+.nav-link:hover {
+  color: white;
+  background-color: darkgreen;
+}
