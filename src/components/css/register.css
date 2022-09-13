@@ -7,3 +7,15 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 3rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .registerwrapper {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .registerwrapper {
+    width: 50%;
+  }
+}

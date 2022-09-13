@@ -5,15 +5,17 @@ import { getAllOrders, updateOrderStatus } from "../services/orderService";
 import { toast } from "react-toastify";
 import io from "socket.io-client";
 import { SocketContext } from "../context/socket.js";
+import { useSelector } from "react-redux";
 
 function OrdersPage() {
   const status = ["yet to start", "preparing", "on the way", "delivered"];
   const [orderList, setOrderList] = useState();
   const socket = useContext(SocketContext);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getAllOrders();
+      const response = await getAllOrders(user.token);
       setOrderList(response.orderlist);
     }
     fetchData();
@@ -37,7 +39,7 @@ function OrdersPage() {
   }, [socket]);
 
   const handleupdateOrderStatus = (order) => {
-    updateOrderStatus({ id: order._id, status: order.status + 1 });
+    updateOrderStatus({ id: order._id, status: order.status + 1 }, user.token);
     order.status = order.status + 1;
     toast.success("status updated successfully");
     const updatedList = orderList.map((item) => {

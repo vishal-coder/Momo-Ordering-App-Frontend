@@ -47,7 +47,7 @@ function Cart() {
     }
     try {
       setLoading(true);
-      const response = await createPaymentOrder({ amount: total });
+      const response = await createPaymentOrder({ amount: total }, user.token);
       console.log("createPaymentOrder-response", response.orderData);
       const { amount, id: order_id, currency } = response.orderData;
       console.log(process.env.REACT_APP_RZ_KEY);
@@ -70,16 +70,19 @@ function Cart() {
           toast.success("Amount paid successfully");
 
           const paymentResult = savePaymentInfo(data);
-          const orderSaved = saveOrder({
-            cart: cart,
-            total: total,
-            user: user.user.email,
-            payemntId: data.razorpayPaymentId,
-          });
+          const orderSaved = saveOrder(
+            {
+              cart: cart,
+              total: total,
+              user: user.user.email,
+              payemntId: data.razorpayPaymentId,
+            },
+            user.token
+          );
           if (!orderSaved) {
             toast.warning("error in executing order");
           } else {
-            navigate("/customerOrderView");
+            navigate("/user/customerOrderView");
             toast.success("Product ordered successfully");
           }
         },
@@ -166,7 +169,7 @@ function Cart() {
           </div>
         </>
       ) : (
-        (navigate("/productList"),
+        (navigate("/user/productList"),
         toast.error("Cart is empty..Please select product"))
       )}
     </div>

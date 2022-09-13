@@ -22,9 +22,9 @@ function Login() {
     } else {
       dispatch(setUser(response));
       if (response.user.userType != "admin") {
-        navigate("/productList");
+        navigate("/user/productList");
       } else {
-        navigate("/dashboard");
+        navigate("/user/dashboard");
       }
     }
   };
@@ -87,16 +87,17 @@ function Login() {
             onBlur={handleBlur}
           />
         </Form.Group>
-        <Button variant="success" type="submit">
-          Submit
-        </Button>
-        <Button
-          variant="outline-danger"
-          style={{ marginLeft: "2rem" }}
-          onClick={() => navigate("/forgotpassword")}
-        >
-          reset Password
-        </Button>
+        <div className="loginbtn-grp">
+          <Button variant="success" type="submit">
+            Submit
+          </Button>
+          <Button
+            variant="outline-danger"
+            onClick={() => navigate("/forgotpassword")}
+          >
+            reset Password
+          </Button>
+        </div>
       </Form>
     </div>
   );

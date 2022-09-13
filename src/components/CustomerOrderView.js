@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
+import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCart } from "../features/cartSlice";
-import Table from "react-bootstrap/Table";
 import { getCustomerOrders } from "../services/orderService";
 
 import { toast } from "react-toastify";
@@ -17,7 +17,10 @@ function CustomerOrderView() {
   useEffect(() => {
     dispatch(resetCart());
     async function fetchData() {
-      const response = await getCustomerOrders({ user: user.user.email });
+      const response = await getCustomerOrders(
+        { user: user.user.email },
+        user.token
+      );
       setOrders(response.customerOrders);
     }
     fetchData();

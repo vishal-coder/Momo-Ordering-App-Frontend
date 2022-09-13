@@ -1,24 +1,20 @@
-import React, { useState } from "react";
+import { useFormik } from "formik";
+import React from "react";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import "./css/register.css";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { string, number } from "yup";
-import { useNavigate } from "react-router-dom";
-import { addProduct, editOneProduct } from "../services/productservice";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addEditedProduct,
-  addNewProduct,
-  addProductToList,
-} from "../features/productSlice.js";
+import * as yup from "yup";
+import { string } from "yup";
+import { addEditedProduct } from "../features/productSlice.js";
+import { editOneProduct } from "../services/productservice";
+import "./css/register.css";
 function EditProduct({ product, setShow }) {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const formvalidation = yup.object({
     title: string().required("Enter title of product").min(4),
@@ -28,7 +24,7 @@ function EditProduct({ product, setShow }) {
 
   const insertProduct = async (values) => {
     values._id = product._id;
-    const response = await editOneProduct(values);
+    const response = await editOneProduct(values, user.token);
     if (!response.success) {
       setFieldError("title", response.message);
       toast.error("Error while editing product");

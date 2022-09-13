@@ -72,3 +72,11 @@
 .hideEle {
   display: none;
 }
+
+.image404 {
+  width: 50vw;
+  height: 60vh;
+  object-fit: cover;
+  margin-top: 3rem;
+  padding-top: 1rem;
+}

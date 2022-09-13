@@ -1,9 +1,10 @@
-export async function saveOrder(values) {
+export async function saveOrder(values, token) {
   const response = await fetch(`${process.env.REACT_APP_API}/order/save`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      "x-auth-token": token,
     },
     body: JSON.stringify(values),
   });
@@ -18,6 +19,7 @@ export async function getAllOrders(token) {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      "x-auth-token": token,
     },
   });
 
@@ -25,12 +27,13 @@ export async function getAllOrders(token) {
   return data;
 }
 
-export async function updateOrderStatus(values) {
+export async function updateOrderStatus(values, token) {
   const response = await fetch(`${process.env.REACT_APP_API}/order/update`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      "x-auth-token": token,
     },
     body: JSON.stringify(values),
   });
@@ -39,7 +42,7 @@ export async function updateOrderStatus(values) {
   return data;
 }
 
-export async function getCustomerOrders(values) {
+export async function getCustomerOrders(values, token) {
   const response = await fetch(
     `${process.env.REACT_APP_API}/order/getCustomerOrder`,
     {
@@ -47,6 +50,7 @@ export async function getCustomerOrders(values) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify(values),
     }

@@ -9,7 +9,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
-  /* overflow: auto; */
+  padding-bottom: 5rem;
 }
 
 .cardwrapper {
@@ -19,7 +19,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
-  width: 50vw;
+  width: 70vw;
   text-align: center;
   overflow-x: auto;
   height: 77vh;

@@ -2,13 +2,14 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import itemImg from "../components/momo.jpg";
 import { addToCart } from "../features/cartSlice";
 
 function ProductCard({ product }) {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <div className="cardwrapper">
@@ -27,19 +28,21 @@ function ProductCard({ product }) {
           <ListGroup className="list-group-flush">
             <ListGroup.Item>Rs.{product.price}</ListGroup.Item>
           </ListGroup>
-          <Button
-            variant="primary"
-            onClick={() => {
-              dispatch(
-                addToCart({
-                  product,
-                })
-              );
-              toast.success("Item added to cart Successfully");
-            }}
-          >
-            Add to Cart
-          </Button>
+          {user && user.user.userType != "admin" ? (
+            <Button
+              variant="primary"
+              onClick={() => {
+                dispatch(
+                  addToCart({
+                    product,
+                  })
+                );
+                toast.success("Item added to cart Successfully");
+              }}
+            >
+              Add to Cart
+            </Button>
+          ) : null}
         </Card.Body>
       </Card>
     </div>

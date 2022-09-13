@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import ForgotPassword from "./components/ForgotPassword.js";
@@ -15,6 +15,8 @@ import Dashboard from "./components/Dashboard";
 import CustomerProductList from "./components/CustomerProductList";
 import Cart from "./components/Cart";
 import CustomerOrderView from "./components/CustomerOrderView";
+import PrivateRoute from "./components/PrivateRoute";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -25,17 +27,42 @@ function App() {
       <MainBody />
 
       <Routes>
-        <Route path="/verifyEmail/:token" element={<VerifyEmail />} />
-        <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
         <Route path="registrationsuccess" element={<RegistrationSuccess />} />
         <Route path="forgotpassword" element={<ForgotPassword />} />
+        <Route path="/verifyEmail/:token" element={<VerifyEmail />} />
         <Route path="/verifyToken" element={<VerifyToken />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/" element={<MainBody />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="/productList" element={<CustomerProductList />} />
-          <Route path="/customerOrderView" element={<CustomerOrderView />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate replace to="/404" />} />
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute>
+              <MainBody />
+            </PrivateRoute>
+          }
+        >
+          <Route
+            path="dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="productList"
+            element={
+              <PrivateRoute>
+                {" "}
+                <CustomerProductList />
+              </PrivateRoute>
+            }
+          />
+          <Route path="customerOrderView" element={<CustomerOrderView />} />
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>

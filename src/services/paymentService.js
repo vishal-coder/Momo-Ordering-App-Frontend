@@ -1,4 +1,4 @@
-export async function createPaymentOrder(values) {
+export async function createPaymentOrder(values, token) {
   const response = await fetch(
     `${process.env.REACT_APP_API}/payment/create-payment-order`,
     {
@@ -6,6 +6,7 @@ export async function createPaymentOrder(values) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify(values),
     }
@@ -15,7 +16,7 @@ export async function createPaymentOrder(values) {
   return data;
 }
 
-export async function PayForOrder(values) {
+export async function PayForOrder(values, token) {
   const response = await fetch(
     `${process.env.REACT_APP_API}/payment/pay-order`,
     {
@@ -23,6 +24,7 @@ export async function PayForOrder(values) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify(values),
     }
@@ -32,7 +34,7 @@ export async function PayForOrder(values) {
   return data;
 }
 
-export async function savePaymentInfo(values) {
+export async function savePaymentInfo(values, token) {
   const response = await fetch(
     `${process.env.REACT_APP_API}/payment/savePaymentInfo`,
     {
@@ -40,6 +42,7 @@ export async function savePaymentInfo(values) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify(values),
     }

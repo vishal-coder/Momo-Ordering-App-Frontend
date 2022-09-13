@@ -6,9 +6,11 @@ import ProductCard from "./ProductCard";
 
 function CustomerProductList() {
   const [productList, setProductList] = useState();
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
     async function fetchData() {
-      const response = await getAllProducts();
+      const response = await getAllProducts(user.token);
       setProductList(response.productlist);
     }
     fetchData();

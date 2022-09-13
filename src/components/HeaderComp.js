@@ -46,11 +46,23 @@ function HeaderComp() {
       <Container>
         <Navbar.Brand>Momo King</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link onClick={() => navigate("productList")}>Home</Nav.Link>
-          <Nav.Link>Features</Nav.Link>
+          {user && (
+            <Nav.Link onClick={() => navigate("/user/productList")}>
+              View Momos
+            </Nav.Link>
+          )}
+
           {user && user.user.userType != "admin" ? (
-            <Nav.Link onClick={() => navigate("customerOrderView")}>
+            <Nav.Link onClick={() => navigate("/user/customerOrderView")}>
               Open Orders
+            </Nav.Link>
+          ) : // <Nav.Link onClick={() => navigate("/user/dashboard")}>
+          //   Dashboard
+          // </Nav.Link>
+          null}
+          {user && user.user.userType == "admin" ? (
+            <Nav.Link onClick={() => navigate("/user/dashboard")}>
+              Dashboard
             </Nav.Link>
           ) : null}
         </Nav>
@@ -73,7 +85,7 @@ function HeaderComp() {
           {user && user.user.userType != "admin" ? (
             <Button
               variant="success"
-              onClick={() => navigate("/cart")}
+              onClick={() => navigate("/user/cart")}
               disabled={cart.length < 1}
             >
               <Cart4 className="cartIcon" color="white" size={24} />{" "}

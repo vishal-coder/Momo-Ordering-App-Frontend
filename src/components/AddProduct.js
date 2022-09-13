@@ -1,20 +1,21 @@
+import { useFormik } from "formik";
 import React from "react";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import "./css/register.css";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { string, number } from "yup";
-import { useNavigate } from "react-router-dom";
-import { addProduct } from "../services/productservice";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
-import { addNewProduct, addProductToList } from "../features/productSlice.js";
+import * as yup from "yup";
+import { string } from "yup";
+import { addProduct } from "../services/productservice";
+import "./css/register.css";
+
+import { addNewProduct } from "../features/productSlice.js";
 function AddProduct() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const formvalidation = yup.object({
     title: string().required("Enter title of product").min(4),
     description: string().required("Enter description of product").min(10),
@@ -22,7 +23,7 @@ function AddProduct() {
   });
 
   const insertProduct = async (values) => {
-    const response = await addProduct(values);
+    const response = await addProduct(values, user.token);
     console.log(response);
     if (!response.success) {
       setFieldError("title", response.message);

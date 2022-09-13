@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { PencilFill, TrashFill } from "react-bootstrap-icons";
+import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
-import { TrashFill, PencilFill } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
-import { deleteProduct, getAllProducts } from "../services/productservice";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
 import { setProductList } from "../features/productSlice";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { deleteProduct, getAllProducts } from "../services/productservice";
 import EditProduct from "./EditProduct";
 
 function ProductList() {
@@ -16,13 +14,14 @@ function ProductList() {
   const [editProduct, setEditProduct] = useState(null);
   const { productList } = useSelector((state) => state.product);
   const [show, setShow] = useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getAllProducts();
+      const response = await getAllProducts(user.token);
       dispatch(setProductList(response.productlist));
     }
     fetchData();
@@ -35,7 +34,7 @@ function ProductList() {
     handleShow();
   };
   const handleDeleteProduct = async (id) => {
-    const response = await deleteProduct({ id: id });
+    const response = await deleteProduct({ id: id }, user.token);
     if (!response.success) {
       toast.error("Error while deleting product");
     } else {
@@ -70,7 +69,7 @@ function ProductList() {
               </thead>
               <tbody>
                 {productList.map((product, index) => (
-                  <tr key={product.id}>
+                  <tr key={product.id + index}>
                     <td>{index + 1}</td>
                     <td>{product.title}</td>
                     <td>{product.description}</td>
@@ -100,14 +99,6 @@ function ProductList() {
               <Modal.Body>
                 <EditProduct product={editProduct} setShow={setShow} />
               </Modal.Body>
-              {/* <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                  Save Changes
-                </Button>
-              </Modal.Footer> */}
             </Modal>
           </>
         )}
