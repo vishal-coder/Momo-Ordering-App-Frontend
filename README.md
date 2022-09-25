@@ -13,6 +13,8 @@ Once the payment through RazorPay payment Gateway is done admin gets notificatio
 
 
 Payment - RazorPay Payment gateway is used for Payment Purpose
+`Payment Method`:
+Select Net Banking -> select any Bank -> click on Pay button -> click on success
 
 ### `Short tech summary`
   - Implemented authentication,authorization using Json Web Token for login,along with CRUD features.
