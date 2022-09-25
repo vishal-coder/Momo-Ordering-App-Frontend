@@ -48,11 +48,11 @@ function Cart() {
     try {
       setLoading(true);
       const response = await createPaymentOrder({ amount: total }, user.token);
-      console.log("createPaymentOrder-response", response.orderData);
+
       const { amount, id: order_id, currency } = response.orderData;
-      console.log(process.env.REACT_APP_RZ_KEY);
+
       var options = {
-        key: `${process.env.REACT_APP_RZ_KEY}`, // Enter the Key ID generated from the Dashboard
+        key: `${process.env.REACT_APP_RZ_KEY}`,
         amount: amount,
         currency: currency,
         name: "MomoKing",
@@ -69,7 +69,7 @@ function Cart() {
           };
           toast.success("Amount paid successfully");
 
-          const paymentResult = savePaymentInfo(data);
+          const paymentResult = savePaymentInfo(data); //TODO: add user token here
           const orderSaved = saveOrder(
             {
               cart: cart,
@@ -120,32 +120,26 @@ function Cart() {
                 </tr>
               </thead>
               <tbody>
-                {cart.map(
-                  (item, index) => (
-                    console.log(item),
-                    (
-                      <tr key={item.product._id}>
-                        <td>{index + 1}</td>
-                        <td>{item.product.title}</td>
-                        <td>Rs. {item.product.price}</td>
-                        <td>{item.quantity}</td>
-                        <td style={{ fontWeight: "bold" }}>
-                          Rs.{" "}
-                          {Number(item.quantity) * Number(item.product.price)}
-                        </td>
-                        <td>
-                          {" "}
-                          <TrashFill
-                            className="additionalIcon"
-                            color="red"
-                            style={{ marginLeft: "2rem" }}
-                            onClick={() => dispatch(removeItem(item))}
-                          />
-                        </td>
-                      </tr>
-                    )
-                  )
-                )}
+                {cart.map((item, index) => (
+                  <tr key={item.product._id}>
+                    <td>{index + 1}</td>
+                    <td>{item.product.title}</td>
+                    <td>Rs. {item.product.price}</td>
+                    <td>{item.quantity}</td>
+                    <td style={{ fontWeight: "bold" }}>
+                      Rs. {Number(item.quantity) * Number(item.product.price)}
+                    </td>
+                    <td>
+                      {" "}
+                      <TrashFill
+                        className="additionalIcon"
+                        color="red"
+                        style={{ marginLeft: "2rem" }}
+                        onClick={() => dispatch(removeItem(item))}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </div>

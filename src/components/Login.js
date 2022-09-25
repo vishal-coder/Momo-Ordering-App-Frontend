@@ -16,7 +16,7 @@ function Login() {
 
   const handleLogin = async (values) => {
     const response = await requestLogin(values);
-    console.log(response);
+
     if (!response.success) {
       setFieldError("username", response.message);
     } else {

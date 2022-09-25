@@ -24,7 +24,7 @@ function AddProduct() {
 
   const insertProduct = async (values) => {
     const response = await addProduct(values, user.token);
-    console.log(response);
+
     if (!response.success) {
       setFieldError("title", response.message);
       toast.error("Error while adding product");

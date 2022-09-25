@@ -23,10 +23,7 @@ export const authSlice = createSlice({
     },
 
     LOG_OUT: (state) => {
-      console.log("called set LOG_OUT", state);
       state.user = undefined;
-
-      console.log("called set LOG_OUT", state);
     },
   },
 });

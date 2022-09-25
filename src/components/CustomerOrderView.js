@@ -24,9 +24,7 @@ function CustomerOrderView() {
       setOrders(response.customerOrders);
     }
     fetchData();
-    socket.on("connect", () => {
-      console.log("I'm connected with the back-end", socket.id);
-    });
+    socket.on("connect", () => {});
     socket.emit("new user", user.user.email);
   }, []);
 
@@ -91,36 +89,31 @@ function CustomerOrderView() {
             </tr>
           </thead>
           <tbody>
-            {orders.map(
-              (order, index) => (
-                console.log(order),
-                (
-                  <tr key={order._id + index}>
-                    <td>{index + 1}</td>
-                    <td>{order._id.slice(15)}</td>
-                    <td>{formatDate1(order.createdOn)}</td>
-                    <td>
-                      {order.cart.reduce(function (accumulator, item) {
-                        return (
-                          accumulator +
-                          item.product.title +
-                          " - " +
-                          item.quantity +
-                          ", "
-                        );
-                      }, "")}
-                    </td>
+            {orders.map((order, index) => (
+              <tr key={order._id + index}>
+                <td>{index + 1}</td>
+                <td>{order._id.slice(15)}</td>
+                <td>{formatDate1(order.createdOn)}</td>
+                <td>
+                  {order.cart.reduce(function (accumulator, item) {
+                    return (
+                      accumulator +
+                      item.product.title +
+                      " - " +
+                      item.quantity +
+                      ", "
+                    );
+                  }, "")}
+                </td>
 
-                    <td>Rs.{order.total}</td>
-                    <td>Done</td>
+                <td>Rs.{order.total}</td>
+                <td>Done</td>
 
-                    <td className={order.status != "0" ? "" : "warningText"}>
-                      {status[order.status]}
-                    </td>
-                  </tr>
-                )
-              )
-            )}
+                <td className={order.status != "0" ? "" : "warningText"}>
+                  {status[order.status]}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       ) : null}
