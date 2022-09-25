@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# [MomoKing](https://momoking.netlify.app/) - Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  [Front End](https://github.com/vishal-coder/Momo-Ordering-App-Frontend)
+  [Back End](https://github.com/vishal-coder/Momo-Ordering-App-Backend)
 
-## Available Scripts
+## Brief Description
 
-In the project directory, you can run:
+- MomoKing website is a  online momo ordering website where user can view different varient of momos and order as per choice.
+Once the payment through RazorPay payment Gateway is done admin gets notification about new order
 
-### `npm start`
+- Admin can add new product as well as edit and delete exisitng product
+- Admin can change the status of order 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Payment - RazorPay Payment gateway is used for Payment Purpose
 
-### `npm test`
+### `Short tech summary`
+  - Implemented authentication,authorization using Json Web Token for login,along with CRUD features.
+  - Integrated payment gateway by RazorPay API to collect service and display transaction status.
+  - Implemented [MongoDB ChangeStream](https://www.mongodb.com/docs/manual/changeStreams) for push notification to admin about payments
+  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `User features`
+  - User can view momo list only after logging in 
+  - User can add different momos to cart and can remote any or all momos from cart
+  - Once payment is done order is confirmed and user can see latest status of order in my orders page  
+  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `Admin features`
+  - Admin Can add new product/Momo
+  - Edit or Delete exisitng product
+  - Can update status of order
+ 
+  
+## Tech Used
+  - ReactJS
+  - ExpressJS
+  - NodeJS
+  - MongoDB and MongoDB ChangeStream
+  - Socket.io - for Push Notification
+  - RazorPay Payment Gateway for Payment Integration - Sharable Payments Link is used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ScreenShots
+- Homepage / Login Page
+![Homepage](/ScreenShots/Home.JPG "Homepage")
 
-### `npm run eject`
+- Momos List 
+![Momos List ](/ScreenShots/MomoList.JPG "Momos List ")
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Customer Orders Page
+![Customer Orders Page](/ScreenShots/CustomerOrdersPage.JPG "Customer Orders Page")
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Cart 
+![Cart](/ScreenShots/Cart.JPG "Cart View")
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Payment
+![Payment](/ScreenShots/Payment.JPG "Payment")
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Admin Add Momo 
+![Add Momo ](/ScreenShots/AddMomo.JPG "Add Momo ")
 
-## Learn More
+- Admin Pending Orders View
+![Admin Pending Orders](/ScreenShots/AdminPendingOrders.JPG "Admin Pending Orders")
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Admin Product List
+![Admin Product List](/ScreenShots/AdminProductList.JPG "Admin Product List")
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
