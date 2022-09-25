@@ -42,3 +42,36 @@ Payment - RazorPay Payment gateway is used for Payment Purpose
   - MongoDB and MongoDB ChangeStream
   - Socket.io - for Push Notification
   - RazorPay Payment Gateway for Payment Integration - Sharable Payments Link is used
+
+## ScreenShots
+- Homepage / Login Page
+![Homepage](/ScreenShots/Home.JPG "Homepage")
+
+- Momos List 
+![Momos List ](/ScreenShots/MomoList.JPG "Momos List ")
+
+- Customer Orders Page
+![Customer Orders Page](/ScreenShots/CustomerOrdersPage.JPG "Customer Orders Page")
+
+- Cart 
+![Cart](/ScreenShots/Cart.JPG "Cart View")
+
+- Payment
+![Payment](/ScreenShots/Payment.JPG "Payment")
+
+- Admin Add Momo 
+![Add Momo ](/ScreenShots/AddMomo.JPG "Add Momo ")
+
+- Admin Pending Orders View
+![Admin Pending Orders](/ScreenShots/AdminPendingOrders.JPG "Admin Pending Orders")
+
+- Admin Product List
+![Admin Product List](/ScreenShots/AdminProductList.JPG "Admin Product List")
+
+
+
+
+
+
+
+
