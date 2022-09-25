@@ -12,7 +12,7 @@ Once the payment through RazorPay payment Gateway is done admin gets notificatio
 - Admin can change the status of order 
 
 
-Payment - RazorPay Payment gateway is used for Payment Purpose
+Payment - RazorPay Payment gateway is used for Payment Purpose  
 `Payment Method`:
 Select Net Banking -> select any Bank -> click on Pay button -> click on success
 
